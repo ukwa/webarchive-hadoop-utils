@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>uk.bl.wa</groupId>
+  <artifactId>webarchive-hadoop-utils</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Web Archive Hadoop Utilities</name>
+  <description>Utilities for working with WARC files on Hadoop.</description>
+  <properties>
+    <hadoop.version>0.20.2</hadoop.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+     <dependency>
+        <groupId>com.github.helgeho</groupId>
+        <artifactId>hadoop-concat-gz</artifactId>
+        <version>1.2.2</version>
+     </dependency>
+      <dependency>
+         <groupId>org.apache.hadoop</groupId>
+         <artifactId>hadoop-core</artifactId>
+         <version>${hadoop.version}</version>
+         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.hadoop</groupId>
+         <artifactId>hadoop-test</artifactId>
+         <version>${hadoop.version}</version>
+         <scope>test</scope>
+         <exclusions>
+            <exclusion>
+               <artifactId>slf4j-api</artifactId>
+               <groupId>org.slf4j</groupId>
+            </exclusion>
+         </exclusions>
+      </dependency>     
+  </dependencies>
+</project>
