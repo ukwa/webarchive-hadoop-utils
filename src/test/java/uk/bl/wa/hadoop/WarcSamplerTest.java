@@ -23,7 +23,7 @@ public class WarcSamplerTest extends MapReduceTestBaseClass {
     private static final Log log = LogFactory.getLog(WarcSamplerTest.class);
 
     @Test
-    public void test() throws Exception {
+    public void testWarcSampler() throws Exception {
         // Set up arguments for the job:
         // String[] args = { "-i", "src/test/resources/test-input-dir.txt",
         // "-o",
@@ -46,7 +46,7 @@ public class WarcSamplerTest extends MapReduceTestBaseClass {
         // Check contents of the output:
         int line_count = 0;
         for (Path output : outputFiles) {
-            log.info(" --- output : " + output);
+            log.info(" --- OUTPUT PATH : " + output);
             if (getFileSystem().isFile(output)) {
                 InputStream is = getFileSystem().open(output);
                 BufferedReader reader = new BufferedReader(

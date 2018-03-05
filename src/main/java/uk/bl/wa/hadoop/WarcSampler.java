@@ -28,7 +28,7 @@ public class WarcSampler extends Configured implements Tool {
         }
         job.setInputFormatClass(WarcGzInputFormat.class);
 
-        // job.setMapperClass(WarcSampleMapper.class);
+        job.setMapperClass(WarcSampleMapper.class);
 
         ImmediateOutput.initialize(job);
 
