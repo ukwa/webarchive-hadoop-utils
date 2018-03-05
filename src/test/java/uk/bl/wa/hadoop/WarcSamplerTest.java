@@ -13,6 +13,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.OutputLogFilter;
 import org.apache.hadoop.util.ToolRunner;
+import org.junit.Assert;
 import org.junit.Test;
 
 import uk.bl.wa.hadoop.mapreduce.MapReduceTestBaseClass;
@@ -24,9 +25,11 @@ public class WarcSamplerTest extends MapReduceTestBaseClass {
     @Test
     public void test() throws Exception {
         // Set up arguments for the job:
-        // FIXME The input file could be written by this test.
-        String[] args = { "-i", "src/test/resources/test-input-dir.txt", "-o",
-                this.output.getName() };
+        // String[] args = { "-i", "src/test/resources/test-input-dir.txt",
+        // "-o",
+        // this.output.getName() };
+        String[] args = { this.dfsCluster.getFileSystem().getHomeDirectory()
+                + "/inputs/wikipedia-mona-lisa.warc.gz", "output" };
 
         // run job
         log.info("Setting up job config...");
@@ -38,7 +41,7 @@ public class WarcSamplerTest extends MapReduceTestBaseClass {
         // check the output
         Path[] outputFiles = FileUtil.stat2Paths(
                 getFileSystem().listStatus(output, new OutputLogFilter()));
-        // Assert.assertEquals(1, outputFiles.length);
+        Assert.assertEquals(1, outputFiles.length);
 
         // Check contents of the output:
         int line_count = 0;

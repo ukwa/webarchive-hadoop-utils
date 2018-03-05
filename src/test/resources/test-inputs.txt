@@ -1,1 +1,1 @@
-inputs/wikipedia-mona-lisa.warc.gz
+inputs/wikipedia-mona-lisa.warc.gz 

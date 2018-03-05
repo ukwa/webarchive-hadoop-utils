@@ -19,9 +19,9 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hdfs.MiniDFSCluster;
 import org.apache.hadoop.mapred.MiniMRCluster;
 import org.apache.hadoop.mapred.OutputLogFilter;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -37,18 +37,18 @@ public abstract class MapReduceTestBaseClass {
             .getLog(MapReduceTestBaseClass.class);
 
     // Test cluster:
-    protected MiniDFSCluster dfsCluster = null;
-    protected MiniMRCluster mrCluster = null;
+    protected static MiniDFSCluster dfsCluster = null;
+    protected static MiniMRCluster mrCluster = null;
 
     // Input files:
-    protected final String[] testWarcs = new String[] {
+    protected static final String[] testWarcs = new String[] {
             "wikipedia-mona-lisa.warc.gz" };
 
-    protected final Path input = new Path("inputs");
-    protected final Path output = new Path("outputs");
+    protected static final Path input = new Path("inputs");
+    protected static final Path output = new Path("outputs");
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         // Print out the full config for debugging purposes:
         // Config index_conf = ConfigFactory.load();
         // LOG.debug(index_conf.root().render());
@@ -79,18 +79,19 @@ public abstract class MapReduceTestBaseClass {
         log.warn("Spun up test cluster.");
     }
 
-    protected FileSystem getFileSystem() throws IOException {
+    protected static FileSystem getFileSystem() throws IOException {
         return dfsCluster.getFileSystem();
     }
 
-    protected void createTextInputFile() throws IOException {
+    protected static void createTextInputFile() throws IOException {
         OutputStream os = getFileSystem().create(new Path(input, "wordcount"));
         Writer wr = new OutputStreamWriter(os);
         wr.write("b a a\n");
         wr.close();
     }
 
-    protected void copyFileToTestCluster(String filename, String localPrefix)
+    protected static void copyFileToTestCluster(String filename,
+            String localPrefix)
             throws IOException {
         Path targetPath = new Path(input, filename);
         File sourceFile = new File(localPrefix + filename);
@@ -118,8 +119,8 @@ public abstract class MapReduceTestBaseClass {
         Assert.assertEquals(testWarcs.length, inputFiles.length);
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterClass
+    public static void tearDown() throws Exception {
         log.warn("Tearing down test cluster...");
         if (dfsCluster != null) {
             dfsCluster.shutdown();

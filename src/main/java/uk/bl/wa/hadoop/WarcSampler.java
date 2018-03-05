@@ -14,15 +14,18 @@ import de.l3s.concatgz.io.warc.WarcGzInputFormat;
 public class WarcSampler extends Configured implements Tool {
     public final static String TOOL_NAME = "WarcPartitioner";
 
-    public final static short REPLICATION = 2;
-
     @Override
     public int run(String[] args) throws Exception {
         Job job =  new Job();
         job.setJobName(TOOL_NAME);
         job.setJarByClass(this.getClass());
 
+
+        System.out.println("PATH IN " + args[0]);
         FileInputFormat.addInputPath(job, new Path(args[0]));
+        for (Path item : FileInputFormat.getInputPaths(job)) {
+            System.out.println("PATH " + item);
+        }
         job.setInputFormatClass(WarcGzInputFormat.class);
 
         // job.setMapperClass(WarcSampleMapper.class);
@@ -33,7 +36,7 @@ public class WarcSampler extends Configured implements Tool {
         ImmediateOutput.setPath(job, outPath);
         ImmediateOutput.setIdPrefix(job, outPath.getName());
         ImmediateOutput.setExtension(job, ".gz");
-        ImmediateOutput.setReplication(job, REPLICATION);
+        // ImmediateOutput.setReplication(job, REPLICATION);
 
         job.setNumReduceTasks(0);
 
